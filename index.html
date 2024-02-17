@@ -48,21 +48,88 @@
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
+      // Iterate over each property in the object
+    for (let key in obj) {
+        // Check if the property name exceeds 9 characters
+        if (key.length > 9) {
+            return "shorten all prop names to 9 chars or less";
+        }
+
+        // Check if the value is null, delete the key-value pair
+        if (obj[key] === null) {
+            delete obj[key];
+        } else {
+            // Transform value of zero to false
+            if (obj[key] === 0) {
+                obj[key] = false;
+            }
+            // Transform value of one to true
+            else if (obj[key] === 1) {
+                obj[key] = true;
+            }
+        }
+    }
+    return obj;
 
     }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
 
+      // If text is empty or there are no forbidden words, return the original text
+    if (!text || forbidden.length === 0) {
+        return text;
+    }
+
+    // Split text into words and remove punctuation
+    const words = text.toLowerCase().replace(/[^\w\s]/g, '').split(' ');
+
+    // Replace forbidden words with "x" characters
+    const scrubbedText = words.map(word => {
+        if (forbidden.includes(word)) {
+            return 'x'.repeat(word.length);
+        }
+        return word;
+    }).join(' ');
+
+    return scrubbedText;
+
     }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
+      // Format the phone number using string slicing
+    const formattedNumber = `(${num.slice(0, 3)}) ${num.slice(3, 6)}-${num.slice(6)}`;
+    return formattedNumber;
 
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
+      let throws = 0;
+    let counter = 0;
+
+    while (true) {
+        throws++; // Increment the total number of rolls
+
+        // Roll the die (generate a random number between 1 and 6)
+        const roll = Math.floor(Math.random() * 6) + 1;
+
+        // If the roll is a six, increment the consecutive counter
+        if (roll === 6) {
+            counter++;
+
+            // If three consecutive sixes are rolled, break out of the loop
+            if (counter === 3) {
+                break;
+            }
+        } else {
+            // If the roll is not a six, reset the consecutive counter
+            counter = 0;
+        }
+    }
+
+    return throws;
 
     }
 
